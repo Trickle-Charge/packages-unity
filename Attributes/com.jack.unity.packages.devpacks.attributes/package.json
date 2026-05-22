@@ -1,5 +1,5 @@
 {
-  "name": "@pog7776/com.jack.unity.packages.devpacks.attributes",
+  "name": "com.jack.unity.packages.devpacks.attributes",
   "displayName": "Attributes",
   "description": "Useful .NET attributes.",
   "version": "0.0.1",

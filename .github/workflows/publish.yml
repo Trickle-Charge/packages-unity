@@ -25,27 +25,27 @@ jobs:
 
       - name: Publish updated packages
         run: |
-          # Loop through every directory containing a package.json
           find . -name "package.json" -not -path "*/node_modules/*" -not -path "*/_Template/*" | while read -r manifest; do
             dir=$(dirname "$manifest")
             echo "Processing package in $dir"
           
             cd "$dir"
-            # Extract name and version for logging
             pkg_name=$(node -p "require('./package.json').name")
             pkg_version=$(node -p "require('./package.json').version")
           
-            echo "Checking if $pkg_name@$pkg_version is already published..."
+            # Formulate the scoped name that GitHub expects internally
+            scoped_name="@pog7776/$pkg_name"
           
-            # Check registry to avoid crashing on duplicate versions
-            if npm view "$pkg_name@$pkg_version" version >/dev/null 2>&1; then
-              echo "$pkg_name@$pkg_version already exists on registry. Skipping."
+            echo "Checking if $scoped_name@$pkg_version is already published..."
+          
+            if npm view "$scoped_name@$pkg_version" version >/dev/null 2>&1; then
+              echo "$scoped_name@$pkg_version already exists. Skipping."
             else
-              echo "Publishing $pkg_name@$pkg_version..."
-              npm publish
+              echo "Publishing $scoped_name@$pkg_version..."
+              # Force npm to publish the unscoped package into your GitHub scope
+              npm publish --scope=@pog7776
             fi
           
-            # Navigate back to repository root
             cd - > /dev/null
           done
         env:

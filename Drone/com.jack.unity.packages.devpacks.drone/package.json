@@ -1,5 +1,5 @@
 {
-  "name": "@pog7776/com.jack.unity.packages.devpacks.drone",
+  "name": "com.jack.unity.packages.devpacks.drone",
   "displayName": "Drones",
   "description": "Drone systems",
   "version": "0.0.1",

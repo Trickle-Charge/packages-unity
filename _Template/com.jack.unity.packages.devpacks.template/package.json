@@ -1,5 +1,5 @@
 {
-  "name": "@pog7776/com.jack.unity.packages.devpacks.{DevpackName}",
+  "name": "com.jack.unity.packages.devpacks.{DevpackName}",
   "displayName": "{DevpackName}",
   "description": "{DevpackDescription}",
   "version": "0.0.1",

@@ -1,5 +1,5 @@
 {
-  "name": "@pog7776/com.jack.unity.packages.devpacks.vehicles",
+  "name": "com.jack.unity.packages.devpacks.vehicles",
   "displayName": "Vehicle Systems",
   "description": "Basic vehicle systems",
   "version": "0.0.1",

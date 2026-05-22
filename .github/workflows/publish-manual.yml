@@ -1,9 +1,7 @@
-name: Publish Unity Packages
+name: Manual Publish (Check Version)
 
 on:
-  push:
-    branches:
-      - main
+  workflow_dispatch: # Manual execution only
 
 jobs:
   publish:
@@ -23,7 +21,7 @@ jobs:
           registry-url: 'https://npm.pkg.github.com'
           scope: '@pog7776'
 
-      - name: Publish updated packages
+      - name: Publish missing packages only
         run: |
           find . -name "package.json" -not -path "*/node_modules/*" -not -path "*/_Template/*" | while read -r manifest; do
             dir=$(dirname "$manifest")
@@ -32,17 +30,13 @@ jobs:
             cd "$dir"
             pkg_name=$(node -p "require('./package.json').name")
             pkg_version=$(node -p "require('./package.json').version")
-          
-            # Formulate the scoped name that GitHub expects internally
             scoped_name="@pog7776/$pkg_name"
           
             echo "Checking if $scoped_name@$pkg_version is already published..."
-          
             if npm view "$scoped_name@$pkg_version" version >/dev/null 2>&1; then
               echo "$scoped_name@$pkg_version already exists. Skipping."
             else
               echo "Publishing $scoped_name@$pkg_version..."
-              # Force npm to publish the unscoped package into your GitHub scope
               npm publish --scope=@pog7776
             fi
           

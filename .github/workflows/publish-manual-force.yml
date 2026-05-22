@@ -1,0 +1,41 @@
+name: Manual Publish (Force Overwrite)
+
+on:
+  workflow_dispatch: # Manual execution only
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          registry-url: 'https://npm.pkg.github.com'
+          scope: '@pog7776'
+
+      - name: Force publish all packages
+        run: |
+          find . -name "package.json" -not -path "*/node_modules/*" -not -path "*/_Template/*" | while read -r manifest; do
+            dir=$(dirname "$manifest")
+            echo "Processing package in $dir"
+          
+            cd "$dir"
+            pkg_name=$(node -p "require('./package.json').name")
+            pkg_version=$(node -p "require('./package.json').version")
+            scoped_name="@pog7776/$pkg_name"
+          
+            echo "Force publishing $scoped_name@$pkg_version..."
+            npm publish --scope=@pog7776
+          
+            cd - > /dev/null
+          done
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

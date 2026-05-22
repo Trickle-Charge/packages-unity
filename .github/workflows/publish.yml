@@ -1,0 +1,52 @@
+name: Publish Unity Packages
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          registry-url: 'https://npm.pkg.github.com'
+          scope: '@pog7776'
+
+      - name: Publish updated packages
+        run: |
+          # Loop through every directory containing a package.json
+          find . -name "package.json" -not -path "*/node_modules/*" | while read -r manifest; do
+            dir=$(dirname "$manifest")
+            echo "Processing package in $dir"
+          
+            cd "$dir"
+            # Extract name and version for logging
+            pkg_name=$(node -p "require('./package.json').name")
+            pkg_version=$(node -p "require('./package.json').version")
+          
+            echo "Checking if $pkg_name@$pkg_version is already published..."
+          
+            # Check registry to avoid crashing on duplicate versions
+            if npm view "$pkg_name@$pkg_version" version >/dev/null 2>&1; then
+              echo "$pkg_name@$pkg_version already exists on registry. Skipping."
+            else
+              echo "Publishing $pkg_name@$pkg_version..."
+              npm publish
+            fi
+          
+            # Navigate back to repository root
+            cd - > /dev/null
+          done
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

@@ -26,7 +26,7 @@ jobs:
       - name: Publish updated packages
         run: |
           # Loop through every directory containing a package.json
-          find . -name "package.json" -not -path "*/node_modules/*" | while read -r manifest; do
+          find . -name "package.json" -not -path "*/node_modules/*" -not -path "*/_Template/*" | while read -r manifest; do
             dir=$(dirname "$manifest")
             echo "Processing package in $dir"
           

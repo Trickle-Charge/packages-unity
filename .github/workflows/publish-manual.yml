@@ -1,7 +1,7 @@
 name: Manual Publish (Check Version)
 
 on:
-  workflow_dispatch: # Manual execution only
+  workflow_dispatch:
 
 jobs:
   publish:
@@ -19,7 +19,6 @@ jobs:
         with:
           node-version: '20'
           registry-url: 'https://npm.pkg.github.com'
-          scope: '@pog7776'
 
       - name: Publish missing packages only
         run: |
@@ -36,8 +35,10 @@ jobs:
             if npm view "$scoped_name@$pkg_version" version >/dev/null 2>&1; then
               echo "$scoped_name@$pkg_version already exists. Skipping."
             else
-              echo "Publishing $scoped_name@$pkg_version..."
-              npm publish --scope=@pog7776
+              echo "Publishing $pkg_name to scope @pog7776..."
+              # Dynamically force the registry routing mapping for this execution
+              npm config set @pog7776:registry=https://npm.pkg.github.com/
+              npm publish --registry=https://npm.pkg.github.com/@pog7776
             fi
           
             cd - > /dev/null

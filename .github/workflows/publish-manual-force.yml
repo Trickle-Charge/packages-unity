@@ -1,7 +1,7 @@
 name: Manual Publish (Force Overwrite)
 
 on:
-  workflow_dispatch: # Manual execution only
+  workflow_dispatch:
 
 jobs:
   publish:
@@ -19,7 +19,6 @@ jobs:
         with:
           node-version: '20'
           registry-url: 'https://npm.pkg.github.com'
-          scope: '@pog7776'
 
       - name: Force publish all packages
         run: |
@@ -30,10 +29,10 @@ jobs:
             cd "$dir"
             pkg_name=$(node -p "require('./package.json').name")
             pkg_version=$(node -p "require('./package.json').version")
-            scoped_name="@pog7776/$pkg_name"
           
-            echo "Force publishing $scoped_name@$pkg_version..."
-            npm publish --scope=@pog7776
+            echo "Force publishing $pkg_name to scope @pog7776..."
+            npm config set @pog7776:registry=https://npm.pkg.github.com/
+            npm publish --registry=https://npm.pkg.github.com/@pog7776
           
             cd - > /dev/null
           done

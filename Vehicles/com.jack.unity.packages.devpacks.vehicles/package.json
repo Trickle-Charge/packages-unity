@@ -1,0 +1,21 @@
+{
+  "name": "com.jack.unity.packages.devpacks.vehicles",
+  "displayName": "Vehicle Systems",
+  "description": "Basic vehicle systems",
+  "version": "0.0.1",
+  "unity": "6000.3",
+  "unityRelease": "10f1",
+  "keywords": [
+    "jack",
+    "vehicles"
+  ],
+  "author": {
+    "name": "Jack Cooper",
+    "email": "jack.cooper7776@gmail.com",
+    "url": "https://jackcooper.dev"
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com/@pog7776"
+  },
+  "dependencies": {}
+}

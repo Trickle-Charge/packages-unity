@@ -1,0 +1,16 @@
+{
+  "name": "Jack.Unity.Packages.Devpacks.Drone.Editor",
+  "rootNamespace": "Jack.Drone.Editor",
+  "references": [],
+  "includePlatforms": [
+    "Editor"
+  ],
+  "excludePlatforms": [],
+  "allowUnsafeCode": false,
+  "overrideReferences": false,
+  "precompiledReferences": [],
+  "autoReferenced": true,
+  "defineConstraints": [],
+  "versionDefines": [],
+  "noEngineReferences": false
+}

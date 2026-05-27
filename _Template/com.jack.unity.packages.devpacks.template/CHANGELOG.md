@@ -1,4 +1,4 @@
 # Changelog
 
 ## [0.0.1] - YYYY-MM-DD
-- Description
+- Creation.

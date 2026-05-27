@@ -1,6 +1,6 @@
 {
   "name": "Jack.Unity.Packages.Devpacks.Drone.Editor",
-  "rootNamespace": "Jack.Drone.Editor",
+  "rootNamespace": "Jack.Vehicle.Drone.Editor",
   "references": [],
   "includePlatforms": [
     "Editor"

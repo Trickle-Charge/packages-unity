@@ -20,6 +20,7 @@
   },
   "dependencies": {
     "com.jack.unity.packages.devpacks.attributes": "0.0.1",
+    "com.jack.unity.packages.devpacks.math": "0.0.1",
     "com.jack.unity.packages.devpacks.physics": "0.0.1",
     "com.jack.unity.packages.devpacks.vehicles": "0.0.1"
   }

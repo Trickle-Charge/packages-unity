@@ -24,7 +24,7 @@ public class WickFlickerGraph : MonoBehaviour
 
     [Space(5)]
     [SerializeField] private bool m_play;
-    [SerializeField] private float m_playbackSpeed = 1;
+    //[SerializeField] private float m_playbackSpeed = 1;
 
     [Curve, SerializeField]
     private AnimationCurve m_animationCurve = new();

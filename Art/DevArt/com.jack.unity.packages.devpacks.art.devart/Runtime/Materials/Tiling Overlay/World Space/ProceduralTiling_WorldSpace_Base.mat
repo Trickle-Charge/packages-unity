@@ -147,6 +147,7 @@ Material:
     - _Surface: 0
     - _Tile: 1
     - _Tile_Scale: 1
+    - _Triplanar_Blend: 1
     - _WorkflowMode: 1
     - _WorldSpacePosition: 0
     - _XRMotionVectorsPass: 1
@@ -158,8 +159,10 @@ Material:
     - _Base_Color: {r: 1, g: 1, b: 1, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
+    - _Normal_Offset: {r: 0, g: 0, b: 0, a: 0}
     - _OverlayColor: {r: 1, g: 1, b: 1, a: 1}
     - _Overlay_Color: {r: 0, g: 0, b: 0, a: 1}
+    - _Position_Offset: {r: 0, g: 0, b: 0, a: 0}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
   m_BuildTextureStacks: []
   m_AllowLocking: 1

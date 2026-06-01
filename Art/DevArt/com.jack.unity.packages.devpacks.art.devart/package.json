@@ -2,7 +2,7 @@
   "name": "com.jack.unity.packages.devpacks.art.devart",
   "displayName": "Dev Art",
   "description": "Development art helpers",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "unity": "6000.3",
   "unityRelease": "10f1",
   "keywords": [

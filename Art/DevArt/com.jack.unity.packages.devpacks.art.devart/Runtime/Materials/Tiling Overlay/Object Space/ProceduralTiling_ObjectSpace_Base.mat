@@ -20,13 +20,13 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: ProceduralTiling_Prototype_Base
+  m_Name: ProceduralTiling_ObjectSpace_Base
   m_Shader: {fileID: -6465566751694194690, guid: c2ebd5ec6d6eb014d893f296a5dd40fd, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords:
-  - _NORMAL_SPACE_WORLD
-  - _POSITION_SPACE_WORLD
+  - _NORMAL_SPACE_OBJECT
+  - _POSITION_SPACE_OBJECT
   m_InvalidKeywords:
   - _POSITIONSPACE_WORLD
   m_LightmapFlags: 4
@@ -131,10 +131,10 @@ Material:
     - _Glossiness: 0
     - _GlossyReflections: 0
     - _Metallic: 0
-    - _NORMAL_SPACE: 0
+    - _NORMAL_SPACE: 1
     - _OcclusionStrength: 1
     - _POSITIONSPACE: 0
-    - _POSITION_SPACE: 0
+    - _POSITION_SPACE: 1
     - _Parallax: 0.005
     - _QueueControl: 0
     - _QueueOffset: 0

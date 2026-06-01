@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: ProceduralTiling_WorldSpace_Blue1
+  m_Name: ProceduralTiling_WorldSpace_Blue
   m_Shader: {fileID: -6465566751694194690, guid: c2ebd5ec6d6eb014d893f296a5dd40fd, type: 3}
   m_Parent: {fileID: 2100000, guid: 607138cb167c2004881481960b4cc281, type: 2}
   m_ModifiedSerializedProperties: 2

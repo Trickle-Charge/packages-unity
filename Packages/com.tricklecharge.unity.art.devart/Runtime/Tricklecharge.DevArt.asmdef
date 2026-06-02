@@ -1,6 +1,6 @@
 {
-  "name": "TrickleCharge.Packages.Art.DevArt.Template",
-  "rootNamespace": "TrickleCharge.Art.DevArt",
+  "name": "TrickleCharge.DevArt.Template",
+  "rootNamespace": "TrickleCharge.DevArt",
   "references": [],
   "includePlatforms": [],
   "excludePlatforms": [],

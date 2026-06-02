@@ -2,12 +2,12 @@ using System.Collections.Generic;
 using System.Linq;
 
 using TrickleCharge.Physics.Thrust;
-using TrickleCharge.Vehicle.Drone.ControlMode;
-using TrickleCharge.Vehicle.Drone.Input;
+using TrickleCharge.Drone.ControlMode;
+using TrickleCharge.Drone.Input;
 
 using UnityEngine;
 
-namespace TrickleCharge.Vehicle.Drone
+namespace TrickleCharge.Drone
 {
 public class QuadcopterController : MonoBehaviour
 {

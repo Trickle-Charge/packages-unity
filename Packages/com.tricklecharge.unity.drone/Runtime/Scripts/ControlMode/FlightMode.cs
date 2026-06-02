@@ -1,4 +1,4 @@
-namespace TrickleCharge.Vehicle.Drone.ControlMode
+namespace TrickleCharge.Drone.ControlMode
 {
 public enum FlightMode
 {

@@ -8,7 +8,7 @@ using UnityEditor;
 
 using UnityEngine;
 
-namespace TrickleCharge.Vehicle.Drone.Debug
+namespace TrickleCharge.Drone.Debug
 {
 public class DroneDebug : MonoBehaviour
 {

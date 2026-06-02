@@ -5,7 +5,7 @@ using TrickleCharge.Attributes;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-namespace TrickleCharge.Vehicle.Drone.Input
+namespace TrickleCharge.Drone.Input
 {
 public class DroneInputManager : MonoBehaviour
 {

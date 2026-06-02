@@ -1,11 +1,11 @@
 using System;
 
 using TrickleCharge.Math.PID;
-using TrickleCharge.Vehicle.Drone.Input;
+using TrickleCharge.Drone.Input;
 
 using UnityEngine;
 
-namespace TrickleCharge.Vehicle.Drone.ControlMode
+namespace TrickleCharge.Drone.ControlMode
 {
 [Serializable]
 public abstract class FlightModel

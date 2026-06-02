@@ -1,0 +1,16 @@
+{
+  "name": "TrickleCharge.Unity.Packages.Devpacks.Drone.Editor",
+  "rootNamespace": "TrickleCharge.Vehicle.Drone.Editor",
+  "references": [],
+  "includePlatforms": [
+    "Editor"
+  ],
+  "excludePlatforms": [],
+  "allowUnsafeCode": false,
+  "overrideReferences": false,
+  "precompiledReferences": [],
+  "autoReferenced": true,
+  "defineConstraints": [],
+  "versionDefines": [],
+  "noEngineReferences": false
+}

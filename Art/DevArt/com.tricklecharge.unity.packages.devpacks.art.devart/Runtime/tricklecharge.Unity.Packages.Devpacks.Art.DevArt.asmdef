@@ -1,0 +1,14 @@
+{
+  "name": "TrickleCharge.Unity.Packages.Art.DevArt.Template",
+  "rootNamespace": "TrickleCharge.Art.DevArt",
+  "references": [],
+  "includePlatforms": [],
+  "excludePlatforms": [],
+  "allowUnsafeCode": false,
+  "overrideReferences": false,
+  "precompiledReferences": [],
+  "autoReferenced": true,
+  "defineConstraints": [],
+  "versionDefines": [],
+  "noEngineReferences": false
+}

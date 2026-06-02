@@ -1,0 +1,16 @@
+{
+  "name": "TrickleCharge.Unity.Packages.Devpacks.Template",
+  "rootNamespace": "TrickleCharge.Template",
+  "references": [
+    "GUID:{EXAMPLE}"
+  ],
+  "includePlatforms": [],
+  "excludePlatforms": [],
+  "allowUnsafeCode": false,
+  "overrideReferences": false,
+  "precompiledReferences": [],
+  "autoReferenced": true,
+  "defineConstraints": [],
+  "versionDefines": [],
+  "noEngineReferences": false
+}

@@ -72,3 +72,5 @@ Unity seems to be a bit uncooperative with Github packages.
 - https://docs.unity3d.com/6000.1/Documentation/Manual/upm-git.html
 
 Using "@" notation in url to force it as Unity does not support "@" notation in the scope. 
+
+Github also does not provide a package search API.

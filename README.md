@@ -42,7 +42,7 @@ I'm working on setting up a proper package registry.
         "name": "Github Packages",
         "url": "https://npm.pkg.github.com/@pog7776/",
         "scopes": [
-            "com.tricklecharge.unity.packages.devpacks"
+            "com.tricklecharge.unity"
         ]
     }
 ]

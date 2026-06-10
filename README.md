@@ -4,6 +4,7 @@
 
 | Name       | Package Name                       | Git URL                                                                                         |
 |------------|------------------------------------|-------------------------------------------------------------------------------------------------|
+| Core       | com.tricklecharge.unity.core       | https://github.com/pog7776/Unity-Devpacks.git?path=/Packages/com.tricklecharge.unity.core        |
 | Art        | com.tricklecharge.unity.art        | https://github.com/pog7776/Unity-Devpacks.git?path=/Packages/com.tricklecharge.unity.art        |
 | Dev Art    | com.tricklecharge.unity.art.devart | https://github.com/pog7776/Unity-Devpacks.git?path=/Packages/com.tricklecharge.unity.art.devart |
 | Attributes | com.tricklecharge.unity.attributes | https://github.com/pog7776/Unity-Devpacks.git?path=/Packages/com.tricklecharge.unity.attributes |
@@ -25,6 +26,7 @@ I'm working on setting up a proper package registry.
 ```
 {
     "dependencies": {
+        "com.tricklecharge.unity.core": "https://github.com/pog7776/Unity-Devpacks.git?path=/Packages/com.tricklecharge.unity.core",
         "com.tricklecharge.unity.art": "https://github.com/pog7776/Unity-Devpacks.git?path=/Packages/com.tricklecharge.unity.art",
         "com.tricklecharge.unity.art.devart": "https://github.com/pog7776/Unity-Devpacks.git?path=/Packages/com.tricklecharge.unity.art.devart",
         "com.tricklecharge.unity.attributes": "https://github.com/pog7776/Unity-Devpacks.git?path=/Packages/com.tricklecharge.unity.attributes",
@@ -69,6 +71,7 @@ I'm working on setting up a proper package registry.
 ```
 {
     "dependencies": {
+        "com.tricklecharge.unity.core": "file:S:/Dev/Unity/Devpacks/Packages/com.tricklecharge.unity.core",
         "com.tricklecharge.unity.art": "file:S:/Dev/Unity/Devpacks/Packages/com.tricklecharge.unity.art",
         "com.tricklecharge.unity.art.devart": "file:S:/Dev/Unity/Devpacks/Packages/com.tricklecharge.unity.art.devart",
         "com.tricklecharge.unity.attributes": "file:S:/Dev/Unity/Devpacks/Packages/com.tricklecharge.unity.attributes",

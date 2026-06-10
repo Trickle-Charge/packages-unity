@@ -1,0 +1,21 @@
+{
+  "name": "com.tricklecharge.unity.core",
+  "displayName": "TrickleCharge Core",
+  "description": "Core systems",
+  "version": "0.0.1",
+  "unity": "6000.3",
+  "unityRelease": "10f1",
+  "keywords": [
+    "tricklecharge",
+    "core"
+  ],
+  "author": {
+    "name": "Jack Cooper",
+    "email": "jack.cooper7776@gmail.com",
+    "url": "https://jackcooper.dev"
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com/@pog7776"
+  },
+  "dependencies": {}
+}

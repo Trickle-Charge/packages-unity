@@ -1,5 +1,8 @@
 # Changelog
 
+## [0.0.5] - 2026-06-10
+- Restructure folders to separate material types.
+
 ## [0.0.4] - 2026-06-02
 - Scene labels use canvas system
 

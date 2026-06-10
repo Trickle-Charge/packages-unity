@@ -1,9 +1,7 @@
 {
   "name": "TrickleCharge.Template",
   "rootNamespace": "TrickleCharge.Template",
-  "references": [
-    "GUID:{EXAMPLE}"
-  ],
+  "references": [],
   "includePlatforms": [],
   "excludePlatforms": [],
   "allowUnsafeCode": false,

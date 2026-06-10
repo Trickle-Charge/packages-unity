@@ -1,9 +1,7 @@
 {
   "name": "TrickleCharge.Template.Editor",
   "rootNamespace": "TrickleCharge.Template.Editor",
-  "references": [
-    "GUID:{EXAMPLE}"
-  ],
+  "references": [],
   "includePlatforms": [
     "Editor"
   ],

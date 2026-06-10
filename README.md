@@ -2,8 +2,9 @@
 
 ## Index
 
-| Name       | Package Name                       | Git URL                                                                                               |
-|------------|------------------------------------|-------------------------------------------------------------------------------------------------------|
+| Name       | Package Name                       | Git URL                                                                                         |
+|------------|------------------------------------|-------------------------------------------------------------------------------------------------|
+| Art        | com.tricklecharge.unity.art        | https://github.com/pog7776/Unity-Devpacks.git?path=/Packages/com.tricklecharge.unity.art        |
 | Dev Art    | com.tricklecharge.unity.art.devart | https://github.com/pog7776/Unity-Devpacks.git?path=/Packages/com.tricklecharge.unity.art.devart |
 | Attributes | com.tricklecharge.unity.attributes | https://github.com/pog7776/Unity-Devpacks.git?path=/Packages/com.tricklecharge.unity.attributes |
 | Drone      | com.tricklecharge.unity.drone      | https://github.com/pog7776/Unity-Devpacks.git?path=/Packages/com.tricklecharge.unity.drone      |
@@ -24,6 +25,7 @@ I'm working on setting up a proper package registry.
 ```
 {
     "dependencies": {
+        "com.tricklecharge.unity.art": "https://github.com/pog7776/Unity-Devpacks.git?path=/Packages/com.tricklecharge.unity.art",
         "com.tricklecharge.unity.art.devart": "https://github.com/pog7776/Unity-Devpacks.git?path=/Packages/com.tricklecharge.unity.art.devart",
         "com.tricklecharge.unity.attributes": "https://github.com/pog7776/Unity-Devpacks.git?path=/Packages/com.tricklecharge.unity.attributes",
         "com.tricklecharge.unity.drone": "https://github.com/pog7776/Unity-Devpacks.git?path=/Packages/com.tricklecharge.unity.drone",
@@ -67,6 +69,7 @@ I'm working on setting up a proper package registry.
 ```
 {
     "dependencies": {
+        "com.tricklecharge.unity.art": "file:S:/Dev/Unity/Devpacks/Packages/com.tricklecharge.unity.art",
         "com.tricklecharge.unity.art.devart": "file:S:/Dev/Unity/Devpacks/Packages/com.tricklecharge.unity.art.devart",
         "com.tricklecharge.unity.attributes": "file:S:/Dev/Unity/Devpacks/Packages/com.tricklecharge.unity.attributes",
         "com.tricklecharge.unity.drone": "file:S:/Dev/Unity/Devpacks/Packages/com.tricklecharge.unity.drone",

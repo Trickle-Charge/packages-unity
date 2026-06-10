@@ -6,7 +6,7 @@
   "unity": "6000.3",
   "unityRelease": "10f1",
   "keywords": [
-    "jack"
+    "tricklecharge"
   ],
   "author": {
     "name": "Jack Cooper",
@@ -16,7 +16,5 @@
   "publishConfig": {
     "registry": "https://npm.pkg.github.com/@pog7776"
   },
-  "dependencies": {
-    "com.tricklecharge.unity.{Example}": "0.0.1"
-  }
+  "dependencies": {}
 }

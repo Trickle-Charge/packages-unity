@@ -2,15 +2,16 @@
 
 ## Index
 
-| Name       | Package Name                       | Git URL                                                                                         |
-|------------|------------------------------------|-------------------------------------------------------------------------------------------------|
-| Art        | com.tricklecharge.unity.art        | https://github.com/pog7776/Unity-Devpacks.git?path=/Packages/com.tricklecharge.unity.art        |
-| Dev Art    | com.tricklecharge.unity.art.devart | https://github.com/pog7776/Unity-Devpacks.git?path=/Packages/com.tricklecharge.unity.art.devart |
-| Attributes | com.tricklecharge.unity.attributes | https://github.com/pog7776/Unity-Devpacks.git?path=/Packages/com.tricklecharge.unity.attributes |
-| Drone      | com.tricklecharge.unity.drone      | https://github.com/pog7776/Unity-Devpacks.git?path=/Packages/com.tricklecharge.unity.drone      |
-| Math       | com.tricklecharge.unity.math       | https://github.com/pog7776/Unity-Devpacks.git?path=/Packages/com.tricklecharge.unity.math       |
-| Physics    | com.tricklecharge.unity.physics    | https://github.com/pog7776/Unity-Devpacks.git?path=/Packages/com.tricklecharge.unity.physics    |
-| Vehicles   | com.tricklecharge.unity.vehicles   | https://github.com/pog7776/Unity-Devpacks.git?path=/Packages/com.tricklecharge.unity.vehicles   |
+| Name          | Package Name                         | Git URL                                                                                           |
+|---------------|--------------------------------------|---------------------------------------------------------------------------------------------------|
+| Art           | com.tricklecharge.unity.art          | https://github.com/pog7776/Unity-Devpacks.git?path=/Packages/com.tricklecharge.unity.art          |
+| Dev Art       | com.tricklecharge.unity.art.devart   | https://github.com/pog7776/Unity-Devpacks.git?path=/Packages/com.tricklecharge.unity.art.devart   |
+| Attributes    | com.tricklecharge.unity.attributes   | https://github.com/pog7776/Unity-Devpacks.git?path=/Packages/com.tricklecharge.unity.attributes   |
+| Drone         | com.tricklecharge.unity.drone        | https://github.com/pog7776/Unity-Devpacks.git?path=/Packages/com.tricklecharge.unity.drone        |
+| Math          | com.tricklecharge.unity.math         | https://github.com/pog7776/Unity-Devpacks.git?path=/Packages/com.tricklecharge.unity.math         |
+| Physics       | com.tricklecharge.unity.physics      | https://github.com/pog7776/Unity-Devpacks.git?path=/Packages/com.tricklecharge.unity.physics      |
+| State Machine | com.tricklecharge.unity.statemachine | https://github.com/pog7776/Unity-Devpacks.git?path=/Packages/com.tricklecharge.unity.statemachine |
+| Vehicles      | com.tricklecharge.unity.vehicles     | https://github.com/pog7776/Unity-Devpacks.git?path=/Packages/com.tricklecharge.unity.vehicles     |
 
 ## Usage
 
@@ -31,6 +32,7 @@ I'm working on setting up a proper package registry.
         "com.tricklecharge.unity.drone": "https://github.com/pog7776/Unity-Devpacks.git?path=/Packages/com.tricklecharge.unity.drone",
         "com.tricklecharge.unity.math": "https://github.com/pog7776/Unity-Devpacks.git?path=/Packages/com.tricklecharge.unity.math",
         "com.tricklecharge.unity.physics": "https://github.com/pog7776/Unity-Devpacks.git?path=/Packages/com.tricklecharge.unity.physics",
+        "com.tricklecharge.unity.statemachine": "https://github.com/pog7776/Unity-Devpacks.git?path=/Packages/com.tricklecharge.unity.statemachine",
         "com.tricklecharge.unity.vehicles": "https://github.com/pog7776/Unity-Devpacks.git?path=/Packages/com.tricklecharge.unity.vehicles"
     }
 }
@@ -75,6 +77,7 @@ I'm working on setting up a proper package registry.
         "com.tricklecharge.unity.drone": "file:S:/Dev/Unity/Devpacks/Packages/com.tricklecharge.unity.drone",
         "com.tricklecharge.unity.math": "file:S:/Dev/Unity/Devpacks/Packages/com.tricklecharge.unity.math",
         "com.tricklecharge.unity.physics": "file:S:/Dev/Unity/Devpacks/Packages/com.tricklecharge.unity.physics",
+        "com.tricklecharge.unity.statemachine": "file:S:/Dev/Unity/Devpacks/Packages/com.tricklecharge.unity.statemachine",
         "com.tricklecharge.unity.vehicles": "file:S:/Dev/Unity/Devpacks/Packages/com.tricklecharge.unity.vehicles"
     }
 }

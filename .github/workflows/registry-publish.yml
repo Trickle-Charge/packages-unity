@@ -26,7 +26,7 @@ jobs:
       # STEP 1: Separate Authentication Identity Layer
       - name: Authenticate Registry
         run: |
-          echo "//npm.tricklecharge.dev:8443/:_authToken=${{ secrets.NODE_AUTH_TOKEN }}" > ~/.npmrc
+          echo "//npm.tricklecharge.dev/:_authToken=${{ secrets.NODE_AUTH_TOKEN }}" > ~/.npmrc
 
       # STEP 2: Compile, Sign, and Gather Artifacts
       - name: Pack and Sign UPM Packages
@@ -60,5 +60,5 @@ jobs:
           
           for tgz in ./signed-dist/*.tgz; do
             echo "Publishing archive: $tgz"
-            npm publish "$tgz" --registry https://npm.tricklecharge.dev:8443 || echo "Notice: Skipping duplicate version."
+            npm publish "$tgz" --registry https://npm.tricklecharge.dev || echo "Notice: Skipping duplicate version."
           done

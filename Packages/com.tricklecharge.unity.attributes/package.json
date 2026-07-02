@@ -17,7 +17,7 @@
     "url": "https://jackcooper.dev"
   },
   "publishConfig": {
-    "registry": "https://npm.tricklecharge.dev:8443/"
+    "registry": "https://npm.tricklecharge.dev/"
   },
   "dependencies": {}
 }

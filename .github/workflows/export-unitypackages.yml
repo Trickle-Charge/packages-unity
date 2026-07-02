@@ -17,21 +17,10 @@ jobs:
         with:
           lfs: true
 
-      # Bridge the gap between your repo root and the hidden Unity project
-      - name: Symlink Packages to Unity Host
-        run: |
-          # Creates a shortcut so Unity sees 'Packages' inside '.github/UnityHost'
-          ln -s $GITHUB_WORKSPACE/Packages $GITHUB_WORKSPACE/.github/UnityHost/Packages
-          
-          # Generate the manifest.json if one doesn't exist
-          if [ ! -f Packages/manifest.json ]; then
-            echo '{"dependencies": {}}' > Packages/manifest.json
-          fi
-
       - name: Cache Library folder
         uses: actions/cache@v4
         with:
-          path: .github/UnityHost/Library
+          path: Library
           key: Library-MultiExport
           restore-keys: |
             Library-
@@ -43,13 +32,12 @@ jobs:
           UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
           UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
         with:
-          # Point the builder to the hidden folder
-          projectPath: .github/UnityHost
+          projectPath: .
+          # We don't need 'allowDirtyBuild' anymore because the repo is perfectly clean
           customParameters: -batchmode -nographics -executeMethod MultiPackageExporter.ExportAllPackages -quit
 
       - name: Upload Generated Packages
         uses: actions/upload-artifact@v4
         with:
           name: TrickleCharge-UnityPackages
-          # The C# script will now output the build folder inside the UnityHost directory
-          path: .github/UnityHost/build/*.unitypackage
+          path: build/*.unitypackage

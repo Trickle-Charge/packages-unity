@@ -20,25 +20,23 @@ public static class MultiPackageExporter
         {
             string pkgName = Path.GetFileName(path);
 
-            // Skip template, hidden folders, or standard modules
             if (pkgName.StartsWith("_") || 
                 pkgName.StartsWith(".") || 
                 pkgName.StartsWith("com.unity.modules"))
             {
-                Debug.Log($"[Exporter] Skipping excluded folder: {pkgName}");
                 continue;
             }
 
-            // Only process your custom scoped packages
             if (!pkgName.StartsWith("com.tricklecharge"))
             {
                 continue;
             }
 
+            // Because 'Packages' is at the root, AssetDatabase perfectly understands this path
             string assetPath = $"Packages/{pkgName}";
             string outputPath = Path.Combine(outputDir, $"{pkgName}.unitypackage");
 
-            Debug.Log($"[Exporter] Exporting {pkgName} from {assetPath} to {outputPath}...");
+            Debug.Log($"[Exporter] Exporting {pkgName} to {outputPath}...");
 
             AssetDatabase.ExportPackage(
                 assetPath,

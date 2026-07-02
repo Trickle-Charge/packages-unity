@@ -58,12 +58,24 @@ jobs:
         shell: bash
         run: |
           for file in build/*.unitypackage; do
-            filename=$(basename "$file" .unitypackage)
-            tag="${filename}-v${{ github.run_number }}"
+            # Extract package name (e.g., 'com.tricklecharge.unity.art')
+            pkg_name=$(basename "$file" .unitypackage)
           
-            echo "Creating release for $filename..."
+            # Find the corresponding package.json file
+            # This assumes your structure: Packages/<pkg_name>/package.json
+            pkg_json="Packages/$pkg_name/package.json"
           
-            gh release create "$tag" "$file" --title "Release $tag" --generate-notes
+            if [ -f "$pkg_json" ]; then
+              # Extract version using jq
+              version=$(jq -r .version "$pkg_json")
+              tag="${pkg_name}-v${version}"
+          
+              echo "Creating release for $pkg_name version $version..."
+          
+              gh release create "$tag" "$file" --title "Release $tag" --generate-notes
+            else
+              echo "Warning: package.json not found for $pkg_name at $pkg_json"
+            fi
           done
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

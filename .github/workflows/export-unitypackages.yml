@@ -1,0 +1,55 @@
+name: Export Unity Packages (.unitypackage)
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  export-packages:
+    name: Batch Export Unity Packages 📦
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          lfs: true
+
+      # Scaffolding: Create runtime directories and copy the script into position
+      - name: Prepare Unity Environment
+        run: |
+          mkdir -p Assets/Editor
+          mkdir -p Packages
+          
+          if [ ! -f Packages/manifest.json ]; then
+            echo '{"dependencies": {}}' > Packages/manifest.json
+          fi
+
+          # Copy your standalone C# file into the temporary Assets folder
+          cp .github/scripts/MultiPackageExporter.cs Assets/Editor/
+
+      - name: Cache Library folder
+        uses: actions/cache@v4
+        with:
+          path: Library
+          key: Library-MultiExport
+          restore-keys: |
+            Library-
+
+      - name: Run Unity Export
+        uses: game-ci/unity-builder@v4
+        env:
+          UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
+          UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
+          UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
+        with:
+          projectPath: .
+          customParameters: -batchmode -nographics -executeMethod MultiPackageExporter.ExportAllPackages -quit
+
+      - name: Upload Generated Packages
+        uses: actions/upload-artifact@v4
+        with:
+          name: TrickleCharge-UnityPackages
+          path: build/*.unitypackage

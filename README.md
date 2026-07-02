@@ -2,15 +2,17 @@
 
 ## Index
 
-| Name                          | Package                                                                                                                  | Version |
-|-------------------------------|--------------------------------------------------------------------------------------------------------------------------|---------|
-| TrickleCharge Art             | [com.tricklecharge.unity.art](https://npm.tricklecharge.dev:8443/-/web/detail/com.tricklecharge.unity.art)               | 0.0.1   |
-| TrickleCharge DevArt          | [com.tricklecharge.unity.art.devart](https://npm.tricklecharge.dev:8443/-/web/detail/com.tricklecharge.unity.art.devart) | 0.0.5   |
-| TrickleCharge Attributes      | [com.tricklecharge.unity.attributes](https://npm.tricklecharge.dev:8443/-/web/detail/com.tricklecharge.unity.attributes) | 0.0.1   |
-| TrickleCharge Drones          | [com.tricklecharge.unity.drone](https://npm.tricklecharge.dev:8443/-/web/detail/com.tricklecharge.unity.drone)           | 0.0.2   |
-| TrickleCharge Math            | [com.tricklecharge.unity.math](https://npm.tricklecharge.dev:8443/-/web/detail/com.tricklecharge.unity.math)             | 0.0.2   |
-| TrickleCharge Physics         | [com.tricklecharge.unity.physics](https://npm.tricklecharge.dev:8443/-/web/detail/com.tricklecharge.unity.physics)       | 0.0.2   |
-| TrickleCharge Vehicle Systems | [com.tricklecharge.unity.vehicles](https://npm.tricklecharge.dev:8443/-/web/detail/com.tricklecharge.unity.vehicles)     | 0.0.1   |
+| Name                          | Package                                                                                                                  | Version                                                                                                                                 |
+|-------------------------------|--------------------------------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------|
+| TrickleCharge Art             | [com.tricklecharge.unity.art](https://npm.tricklecharge.dev:8443/-/web/detail/com.tricklecharge.unity.art)               | ![NPM Version](https://img.shields.io/npm/v/com.tricklecharge.unity.art?registry_uri=https%3A%2F%2Fnpm.tricklecharge.dev%3A8443)        |
+| TrickleCharge DevArt          | [com.tricklecharge.unity.art.devart](https://npm.tricklecharge.dev:8443/-/web/detail/com.tricklecharge.unity.art.devart) | ![NPM Version](https://img.shields.io/npm/v/com.tricklecharge.unity.art.devart?registry_uri=https%3A%2F%2Fnpm.tricklecharge.dev%3A8443) |
+| TrickleCharge Attributes      | [com.tricklecharge.unity.attributes](https://npm.tricklecharge.dev:8443/-/web/detail/com.tricklecharge.unity.attributes) | ![NPM Version](https://img.shields.io/npm/v/com.tricklecharge.unity.attributes?registry_uri=https%3A%2F%2Fnpm.tricklecharge.dev%3A8443) |
+| TrickleCharge Drones          | [com.tricklecharge.unity.drone](https://npm.tricklecharge.dev:8443/-/web/detail/com.tricklecharge.unity.drone)           | ![NPM Version](https://img.shields.io/npm/v/com.tricklecharge.unity.drone?registry_uri=https%3A%2F%2Fnpm.tricklecharge.dev%3A8443)      |
+| TrickleCharge Math            | [com.tricklecharge.unity.math](https://npm.tricklecharge.dev:8443/-/web/detail/com.tricklecharge.unity.math)             | ![NPM Version](https://img.shields.io/npm/v/com.tricklecharge.unity.math?registry_uri=https%3A%2F%2Fnpm.tricklecharge.dev%3A8443)       |
+| TrickleCharge Physics         | [com.tricklecharge.unity.physics](https://npm.tricklecharge.dev:8443/-/web/detail/com.tricklecharge.unity.physics)       | ![NPM Version](https://img.shields.io/npm/v/com.tricklecharge.unity.physics?registry_uri=https%3A%2F%2Fnpm.tricklecharge.dev%3A8443)    |
+| TrickleCharge Vehicle Systems | [com.tricklecharge.unity.vehicles](https://npm.tricklecharge.dev:8443/-/web/detail/com.tricklecharge.unity.vehicles)     | ![NPM Version](https://img.shields.io/npm/v/com.tricklecharge.unity.vehicles?registry_uri=https%3A%2F%2Fnpm.tricklecharge.dev%3A8443)   |
+
+---
 
 ## Usage
 
@@ -28,6 +30,8 @@ or via the Unity project settings:
 > - Name: `TrickleCharge Registry`
 > - URL: [https://npm.tricklecharge.dev:8443/](https://npm.tricklecharge.dev:8443/)
 > - Scope: `com.tricklecharge`
+
+---
 
 ### Example `manifest.json`
 
@@ -71,3 +75,4 @@ You can also clone the repo and add the packages directly:
     }
 }
 ```
+---

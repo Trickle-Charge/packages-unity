@@ -17,29 +17,21 @@ jobs:
         with:
           lfs: true
 
-      # Scaffolding: Create runtime directories and copy the script into position
-      - name: Prepare Unity Environment
+      # Bridge the gap between your repo root and the hidden Unity project
+      - name: Symlink Packages to Unity Host
         run: |
-          mkdir -p Assets/Editor
-          mkdir -p Packages
-          mkdir -p ProjectSettings
+          # Creates a shortcut so Unity sees 'Packages' inside '.github/UnityHost'
+          ln -s $GITHUB_WORKSPACE/Packages $GITHUB_WORKSPACE/.github/UnityHost/Packages
           
-          if [ ! -f Packages/manifest.json ]; then
-            echo '{"dependencies": {}}' > Packages/manifest.json
+          # Optional: generate the manifest.json if you don't want to commit an empty one
+          if [ ! -f .github/UnityHost/Packages/manifest.json ]; then
+            echo '{"dependencies": {}}' > .github/UnityHost/Packages/manifest.json
           fi
-
-          # Dynamically create the file Game-CI needs to choose its Docker image
-          if [ ! -f ProjectSettings/ProjectVersion.txt ]; then
-            echo "m_EditorVersion: 6000.3.10f1" > ProjectSettings/ProjectVersion.txt
-          fi
-
-          # Copy your standalone C# file into the temporary Assets folder
-          cp .github/scripts/MultiPackageExporter.cs Assets/Editor/
 
       - name: Cache Library folder
         uses: actions/cache@v4
         with:
-          path: Library
+          path: .github/UnityHost/Library
           key: Library-MultiExport
           restore-keys: |
             Library-
@@ -51,11 +43,13 @@ jobs:
           UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
           UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
         with:
-          projectPath: .
+          # Point the builder to the hidden folder
+          projectPath: .github/UnityHost
           customParameters: -batchmode -nographics -executeMethod MultiPackageExporter.ExportAllPackages -quit
 
       - name: Upload Generated Packages
         uses: actions/upload-artifact@v4
         with:
           name: TrickleCharge-UnityPackages
-          path: build/*.unitypackage
+          # The C# script will now output the build folder inside the UnityHost directory
+          path: .github/UnityHost/build/*.unitypackage

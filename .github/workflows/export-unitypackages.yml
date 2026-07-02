@@ -40,3 +40,10 @@ jobs:
         with:
           name: TrickleCharge-UnityPackages
           path: build/*.unitypackage
+
+      - name: Publish Releases
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ env.PACKAGE_NAME }}-v${{ env.PACKAGE_VERSION }}
+          files: build/${{ env.PACKAGE_NAME }}.unitypackage
+          generate_release_notes: true

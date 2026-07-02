@@ -22,9 +22,15 @@ jobs:
         run: |
           mkdir -p Assets/Editor
           mkdir -p Packages
+          mkdir -p ProjectSettings
           
           if [ ! -f Packages/manifest.json ]; then
             echo '{"dependencies": {}}' > Packages/manifest.json
+          fi
+
+          # Dynamically create the file Game-CI needs to choose its Docker image
+          if [ ! -f ProjectSettings/ProjectVersion.txt ]; then
+            echo "m_EditorVersion: 6000.3.10f1" > ProjectSettings/ProjectVersion.txt
           fi
 
           # Copy your standalone C# file into the temporary Assets folder

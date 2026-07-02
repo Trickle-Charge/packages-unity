@@ -24,6 +24,13 @@ jobs:
           key: Library-MultiExport
           restore-keys: |
             Library-
+            
+      - name: Exclude Library folder from git (local only)
+        run: |
+          mkdir -p .git/info
+          # add a line to the local exclude file so Library/ is ignored for this run
+          echo "Library/" >> .git/info/exclude
+          git status --porcelain
 
       - name: Run Unity Export
         uses: game-ci/unity-builder@v4

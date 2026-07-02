@@ -4,7 +4,7 @@ on:
   push:
     branches:
       - main
-  workflow_dispatch: # Allows manual force-publishing if needed
+  workflow_dispatch:
 
 jobs:
   publish:
@@ -18,23 +18,45 @@ jobs:
         with:
           node-version: '20'
 
-      - name: Authenticate and Publish Packages
+      - name: Install Unity UPM CLI
+        run: npm install -g @unity/upm-cli
+
+      # STEP 1: Separate Authentication Identity Layer
+      - name: Authenticate Registry
+        run: |
+          echo "//npm.tricklecharge.dev:8443/:_authToken=${{ secrets.NODE_AUTH_TOKEN }}" > ~/.npmrc
+
+      # STEP 2: Compile, Sign, and Gather Artifacts
+      - name: Pack and Sign UPM Packages
+        env:
+          UPM_SERVICE_ACCOUNT_KEY_ID: ${{ secrets.UPM_SERVICE_ACCOUNT_KEY_ID }}
+          UPM_SERVICE_ACCOUNT_KEY_SECRET: ${{ secrets.UPM_SERVICE_ACCOUNT_KEY_SECRET }}
         shell: bash
         run: |
-          # 1. Inject your private registry authToken securely into the runner's global npm profile
-          echo "//npm.tricklecharge.dev:8443/:_authToken=\${NODE_AUTH_TOKEN}" > ~/.npmrc
+          # Create a central distribution folder to aggregate all signed outputs
+          mkdir -p signed-dist
           
-          # 2. Iterate through all custom package directories
           for dir in Packages/com.tricklecharge.*/; do
             if [ -f "${dir}package.json" ]; then
               pkg_name=$(basename "$dir")
-              echo "Processing package: $pkg_name"
+              echo "Signing package: $pkg_name"
           
-              # 3. Publish to Verdaccio. 
-              # The "|| true" ensures if one package version hasn't been bumped, 
-              # the script logs it but continues publishing the other packages.
-              npm publish "$dir" --registry https://npm.tricklecharge.dev:8443 || echo "Notice: Skipping $pkg_name. Version might already exist on the server."
+              upm pack "$dir" \
+                --organization-id ${{ secrets.UNITY_ORG_ID }} \
+                --destination ./signed-dist
             fi
           done
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NODE_AUTH_TOKEN }}
+
+      # STEP 3: Deploy Final Tarballs to Verdaccio
+      - name: Publish Packages to Verdaccio
+        shell: bash
+        run: |
+          if [ -z "$(ls -A signed-dist/*.tgz 2>/dev/null)" ]; then
+            echo "No signed tarballs found to deploy."
+            exit 0
+          fi
+          
+          for tgz in signed-dist/*.tgz; do
+            echo "Publishing archive: $tgz"
+            npm publish "$tgz" --registry https://npm.tricklecharge.dev:8443 || echo "Notice: Skipping duplicate version."
+          done

@@ -1,4 +1,4 @@
-name: Export Unity Packages (.unitypackage)
+name: Build and Release
 
 on:
   push:
@@ -7,13 +7,10 @@ on:
   workflow_dispatch:
 
 jobs:
-  export-packages:
-    name: Batch Export Unity Packages 📦
+  build:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
         with:
           lfs: true
 
@@ -24,13 +21,6 @@ jobs:
           key: Library-MultiExport
           restore-keys: |
             Library-
-            
-      - name: Exclude Library folder from git (local only)
-        run: |
-          mkdir -p .git/info
-          # add a line to the local exclude file so Library/ is ignored for this run
-          echo "Library/" >> .git/info/exclude
-          git status --porcelain
 
       - name: Run Unity Export
         uses: game-ci/unity-builder@v4
@@ -42,15 +32,37 @@ jobs:
           projectPath: .
           buildMethod: MultiPackageExporter.ExportAllPackages
 
-      - name: Upload Generated Packages
+      - name: Upload Artifacts
         uses: actions/upload-artifact@v4
         with:
           name: TrickleCharge-UnityPackages
           path: build/*.unitypackage
 
-      - name: Publish Releases
-        uses: softprops/action-gh-release@v2
+  # JOB 2: Release each package individually
+  release:
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write # Required for creating releases
+    steps:
+      - name: Download Artifacts
+        uses: actions/download-artifact@v4
         with:
-          tag_name: ${{ env.PACKAGE_NAME }}-v${{ env.PACKAGE_VERSION }}
-          files: build/${{ env.PACKAGE_NAME }}.unitypackage
-          generate_release_notes: true
+          name: TrickleCharge-UnityPackages
+          path: build/
+
+      - name: Publish Individual Releases
+        shell: bash
+        run: |
+          for file in build/*.unitypackage; do
+            # Extract package name (e.g., 'com.tricklecharge.unity.art')
+            filename=$(basename "$file" .unitypackage)
+            tag="${filename}-v${{ github.run_number }}"
+          
+            echo "Creating release for $filename..."
+          
+            # Use gh release create to publish the specific file
+            gh release create "$tag" "$file" --title "Release $tag" --generate-notes
+          done
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

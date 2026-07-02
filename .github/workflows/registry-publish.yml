@@ -19,7 +19,9 @@ jobs:
           node-version: '20'
 
       - name: Install Unity UPM CLI
-        run: npm install -g @unity/upm-cli
+        run: |
+          curl -fsSL https://cdn.packages.unity.com/upm-cli/install.sh | bash
+          echo "$HOME/.upm/bin" >> $GITHUB_PATH
 
       # STEP 1: Separate Authentication Identity Layer
       - name: Authenticate Registry

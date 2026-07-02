@@ -43,8 +43,11 @@ jobs:
     needs: build
     runs-on: ubuntu-latest
     permissions:
-      contents: write # Required for creating releases
+      contents: write
     steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
       - name: Download Artifacts
         uses: actions/download-artifact@v4
         with:
@@ -55,13 +58,11 @@ jobs:
         shell: bash
         run: |
           for file in build/*.unitypackage; do
-            # Extract package name (e.g., 'com.tricklecharge.unity.art')
             filename=$(basename "$file" .unitypackage)
             tag="${filename}-v${{ github.run_number }}"
           
             echo "Creating release for $filename..."
           
-            # Use gh release create to publish the specific file
             gh release create "$tag" "$file" --title "Release $tag" --generate-notes
           done
         env:

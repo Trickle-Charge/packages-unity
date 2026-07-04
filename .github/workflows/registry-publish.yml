@@ -4,9 +4,10 @@ on:
   push:
     paths:
       - 'Packages/**'
+  
+  workflow_dispatch:
 
 jobs:
   trigger-shared-pipeline:
     uses: Trickle-Charge/TrickleCharge-Infra/.github/workflows/registry-publish.yml@main
-
     secrets: inherit

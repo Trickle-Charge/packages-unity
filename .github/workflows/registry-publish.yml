@@ -9,5 +9,5 @@ on:
 
 jobs:
   trigger-shared-pipeline:
-    uses: Trickle-Charge/TrickleCharge-Infra/.github/workflows/registry-publish.yml@main
+    uses: ./.github/workflows/publish-unity-packages.yml
     secrets: inherit

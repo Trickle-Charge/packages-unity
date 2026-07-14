@@ -11,8 +11,9 @@
   "author": {
     "name": "Jack Cooper",
     "email": "jack.cooper7776@gmail.com",
-    "url": "https://jackcooper.dev"
+    "url": "https://github.com/pog7776"
   },
+  "homepage": "https://github.com/Trickle-Charge",
   "publishConfig": {
     "registry": "https://npm.tricklecharge.dev/"
   },

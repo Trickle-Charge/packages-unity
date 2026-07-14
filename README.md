@@ -51,7 +51,7 @@ or via the Unity project settings:
       "name": "TrickleCharge Registry",
       "url": "https://npm.tricklecharge.dev/",
       "scopes": [
-        "com.tricklecharge"
+        "com.tricklecharge.unity"
       ]
     }
   ]

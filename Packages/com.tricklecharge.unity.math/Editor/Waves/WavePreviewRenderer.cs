@@ -12,7 +12,7 @@ namespace TrickleCharge.Math.Editor.Waves
     {
         public const float GraphHeight = 75f;
 
-        private const int _sampleCount = 45;
+        private const int _sampleCount = 100;
         private const float _sampleRangeX = 10f;
 
         private static readonly Dictionary<string, float> s_scrubTimes = new();

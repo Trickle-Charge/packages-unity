@@ -42,7 +42,7 @@ or via the Unity project settings:
         "com.tricklecharge.unity.art.devart": "0.0.5",
         "com.tricklecharge.unity.attributes": "0.0.1",
         "com.tricklecharge.unity.drone": "0.0.2",
-        "com.tricklecharge.unity.math": "0.0.2",
+        "com.tricklecharge.unity.math": "0.0.3",
         "com.tricklecharge.unity.physics": "0.0.2",
         "com.tricklecharge.unity.vehicles": "0.0.1",
     },
@@ -65,13 +65,13 @@ You can also clone the repo and add the packages directly:
 ```
 {
     "dependencies": {
-        "com.tricklecharge.unity.art.core": "file:S:/Dev/Unity/Devpacks/Packages/com.tricklecharge.unity.art.core",
-        "com.tricklecharge.unity.art.devart": "file:S:/Dev/Unity/Devpacks/Packages/com.tricklecharge.unity.art.devart",
-        "com.tricklecharge.unity.attributes": "file:S:/Dev/Unity/Devpacks/Packages/com.tricklecharge.unity.attributes",
-        "com.tricklecharge.unity.drone": "file:S:/Dev/Unity/Devpacks/Packages/com.tricklecharge.unity.drone",
-        "com.tricklecharge.unity.math": "file:S:/Dev/Unity/Devpacks/Packages/com.tricklecharge.unity.math",
-        "com.tricklecharge.unity.physics": "file:S:/Dev/Unity/Devpacks/Packages/com.tricklecharge.unity.physics",
-        "com.tricklecharge.unity.vehicles": "file:S:/Dev/Unity/Devpacks/Packages/com.tricklecharge.unity.vehicles"
+        "com.tricklecharge.unity.art.core": "file:S:/Dev/unity-packages/Packages/com.tricklecharge.unity.art.core",
+        "com.tricklecharge.unity.art.devart": "file:S:/Dev/unity-packages/Packages/com.tricklecharge.unity.art.devart",
+        "com.tricklecharge.unity.attributes": "file:S:/Dev/unity-packages/Packages/com.tricklecharge.unity.attributes",
+        "com.tricklecharge.unity.drone": "file:S:/Dev/unity-packages/Packages/com.tricklecharge.unity.drone",
+        "com.tricklecharge.unity.math": "file:S:/Dev/unity-packages/Packages/com.tricklecharge.unity.math",
+        "com.tricklecharge.unity.physics": "file:S:/Dev/unity-packages/Packages/com.tricklecharge.unity.physics",
+        "com.tricklecharge.unity.vehicles": "file:S:/Dev/unity-packages/Packages/com.tricklecharge.unity.vehicles"
     }
 }
 ```

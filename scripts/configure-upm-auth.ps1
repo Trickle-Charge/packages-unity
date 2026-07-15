@@ -4,7 +4,8 @@
 $Token = Read-Host "Enter your TrickleCharge Registry Token"
 
 # Gracefully exit if the user presses enter without pasting a token
-if ([string]::IsNullOrWhiteSpace($Token)) {
+if ([string]::IsNullOrWhiteSpace($Token))
+{
     Write-Error "Token cannot be empty. Authentication setup aborted."
     exit
 }
@@ -16,6 +17,17 @@ $ConfigLines = @(
     "_authToken = `"$Token`""
     "alwaysAuth = true"
 )
+
+# If the file exists, check if it ends with a newline character to prevent bunching or double spacing
+if (Test-Path $ConfigPath)
+{
+    $Content = [System.IO.File]::ReadAllText($ConfigPath)
+
+    if (![string]::IsNullOrEmpty($Content) -and !$Content.EndsWith("`n") -and !$Content.EndsWith("`r"))
+    {
+        Add-Content -Path $ConfigPath -Value "`n"
+    }
+}
 
 Add-Content -Path $ConfigPath -Value $ConfigLines
 

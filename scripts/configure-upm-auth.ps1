@@ -12,6 +12,7 @@ if ([string]::IsNullOrWhiteSpace($Token)) {
 $ConfigPath = Join-Path $Home ".upmconfig.toml"
 
 $ConfigContent = @"
+
 [npmAuth."https://npm.tricklecharge.dev/"]
 _authToken = "$Token"
 alwaysAuth = true

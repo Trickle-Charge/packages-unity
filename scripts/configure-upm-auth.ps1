@@ -11,13 +11,12 @@ if ([string]::IsNullOrWhiteSpace($Token)) {
 
 $ConfigPath = Join-Path $Home ".upmconfig.toml"
 
-$ConfigContent = @"
+$ConfigLines = @(
+    '[npmAuth."https://npm.tricklecharge.dev/"]'
+    "_authToken = `"$Token`""
+    "alwaysAuth = true"
+)
 
-[npmAuth."https://npm.tricklecharge.dev/"]
-_authToken = "$Token"
-alwaysAuth = true
-"@
-
-$ConfigContent | Out-File -FilePath $ConfigPath -Append -Encoding utf8
+Add-Content -Path $ConfigPath -Value $ConfigLines
 
 Write-Host "Setup complete! Configured $ConfigPath" -ForegroundColor Green

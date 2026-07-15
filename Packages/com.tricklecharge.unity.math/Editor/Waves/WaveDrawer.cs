@@ -1,210 +1,137 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 using TrickleCharge.Math.Waves;
 
 using UnityEditor;
-using UnityEditor.UIElements;
 
 using UnityEngine;
-using UnityEngine.UIElements;
 
 namespace TrickleCharge.Math.Editor.Waves
 {
-//[CustomPropertyDrawer(typeof(IWave))]
-//[CustomPropertyDrawer(typeof(Wave))]
-public class WaveDrawer : PropertyDrawer
-{
-    //private PropertyField _waveField;
-    private readonly AnimationCurve _animationCurve = new();
-    //private CurveField _curveField;
-
-    private readonly WavePreview _wavePreview = new();
-
-    private float _startTime;
-    private float _endTime = 10;
-    private float _timeOffset;
-    private float _resolution = 0.001f;
-
-    // private readonly FloatField _startTimeField  = new(label:"Start Time");
-    // private readonly FloatField _endTimeField    = new(label:"End Time");
-    // private readonly FloatField _timeOffsetField = new(label:"Time Offset");
-    // private readonly FloatField _resolutionField = new(label:"Resolution");
-    //
-    // private float StartTime => _startTimeField.value;
-    // private float EndTime => _endTimeField.value;
-    // private float TimeOffset => _timeOffsetField.value;
-    // private float Resolution
-    // {
-    //     get
-    //     {
-    //         float fieldValue = _resolutionField.value;
-    //         return fieldValue < _resolutionMin ? _resolutionMin : fieldValue;
-    //     }
-    // }
-    //
-    // private const float _resolutionMin = 0.0001f;
-
-    // public override VisualElement CreatePropertyGUI(SerializedProperty property)
-    // {
-    //     //if(property.propertyType != SerializedPropertyType.AnimationCurve) { return null; }
-    //
-    //     VisualElement container = new();
-    //
-    //     Wave wave = (Wave) property.boxedValue;
-    //
-    //     _waveField = new PropertyField(property);
-    //     _waveField.BindProperty(property);
-    //
-    //     _curveField = CreateCurveField(_animationCurve);
-    //     _curveField.BindProperty(property);
-    //
-    //     container.Add(_waveField);
-    //     container.Add(_wavePreview.StartTimeField);
-    //     container.Add(_wavePreview.EndTimeField);
-    //     container.Add(_wavePreview.TimeOffsetField);
-    //     container.Add(_wavePreview.ResolutionField);
-    //     container.Add(_curveField);
-    //
-    //     return container;
-    // }
-
-    private static CurveField CreateCurveField(AnimationCurve curve) => new() { value = curve, style = { flexGrow = 1 } };
-
-    /// <inheritdoc />
-    public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
+    [CustomPropertyDrawer(typeof(IWave), true)]
+    public class WaveDrawer : PropertyDrawer
     {
-        //typeof(IWave).GetMethod("Evaluate").in
-        Wave wave = (Wave) property.boxedValue;
-        //IWave wave = (Wave) property.objectReferenceValue;
-        _animationCurve.keys = _wavePreview.GetFrames(wave).ToArray();
-        
-        
-        // Using BeginProperty / EndProperty on the parent property means that
-        // prefab override logic works on the entire property.
-        EditorGUI.BeginProperty(position, label, property);
-
-        // Draw label
-        position = EditorGUI.PrefixLabel(position, GUIUtility.GetControlID(FocusType.Passive), label);
-
-        // Don't make child fields be indented
-        int indent = EditorGUI.indentLevel;
-        EditorGUI.indentLevel = 0;
-
-        // Calculate rects
-        //float spacing = EditorGUIUtility.standardVerticalSpacing;
-        // Rect waveRect  = new(position.x, position.y + spacing, position.width, position.height);
-        // Rect startRect = new(position.x, position.y + spacing, position.width, position.height);
-        // Rect endRect   = new(position.x, position.y + spacing, position.width, position.height);
-        // Rect timeRect  = new(position.x, position.y + spacing, position.width, position.height);
-        // Rect resRect   = new(position.x, position.y + spacing, position.width, position.height);
-        // Rect curveRect = new(position.x, position.y + spacing, position.width, position.height);
-
-        Rect waveRect  = AutoPosition(position, 1);
-        Rect startRect = AutoPosition(position, 3);
-        Rect endRect   = AutoPosition(position, 5);
-        Rect timeRect  = AutoPosition(position, 7);
-        Rect resRect   = AutoPosition(position, 9);
-        Rect curveRect = AutoPosition(position, 10);
-
-        // Draw fields - pass GUIContent.none to each so they are drawn without labels
-        EditorGUI.PropertyField(waveRect, property, GUIContent.none);
-
-        _startTime  = EditorGUI.FloatField(startRect, "Start Time", _startTime);
-        _endTime    = EditorGUI.FloatField(endRect, "End Time", _endTime);
-        _timeOffset = EditorGUI.FloatField(timeRect, "Time Offset", _timeOffset);
-        _resolution = EditorGUI.FloatField(resRect, "Resolution", _resolution);
-
-        EditorGUI.CurveField(curveRect, _animationCurve);
-
-        //     container.Add(_waveField);
-        //     container.Add(_wavePreview.StartTimeField);
-        //     container.Add(_wavePreview.EndTimeField);
-        //     container.Add(_wavePreview.TimeOffsetField);
-        //     container.Add(_wavePreview.ResolutionField);
-        //     container.Add(_curveField);
-
-        // Set indent back to what it was
-        EditorGUI.indentLevel = indent;
-
-        EditorGUI.EndProperty();
-    }
-
-    private static Rect AutoPosition(Rect position, float lineNumber)
-    {
-        float spacing = EditorGUIUtility.singleLineHeight * lineNumber;
-        return new Rect(position.x, position.y + spacing, position.width, EditorGUIUtility.singleLineHeight);
-    }
-
-    /// <inheritdoc />
-    public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
-    {
-        return base.GetPropertyHeight(property, label) * 12;
-    }
-
-    [Serializable]
-    private class WavePreview
-    {
-        public readonly FloatField StartTimeField  = new(label:"Start Time");
-        public readonly FloatField EndTimeField    = new(label:"End Time");
-        public readonly FloatField TimeOffsetField = new(label:"Time Offset");
-        public readonly FloatField ResolutionField = new(label:"Resolution");
-
-        private float StartTime => StartTimeField.value;
-        private float EndTime => EndTimeField.value;
-        private float TimeOffset => TimeOffsetField.value;
-        private float Resolution
+        public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
         {
-            get
-            {
-                float fieldValue = ResolutionField.value;
-                return fieldValue < ResolutionMin ? ResolutionMin : fieldValue;
-            }
+            Rect headerRect = new(position.x, position.y, position.width, EditorGUIUtility.singleLineHeight);
+
+            // 1. Setup layout header based on field type
+            DrawHeader(headerRect, property, label);
+
+            // 2. Guard against unassigned managed object references
+            if (property.propertyType == SerializedPropertyType.ManagedReference && string.IsNullOrEmpty(property.managedReferenceFullTypename)) { return; }
+
+            // 3. Foldout visibility guard
+            if (!property.isExpanded) { return; }
+
+            // 4. Render concrete internal properties
+            DrawChildProperties(position, property);
+
+            // 5. Compute layout space offset to place the decoupled visualizer field
+            float childrenHeight = GetChildrenTotalHeight(property);
+            float previewStartY = position.y + EditorGUIUtility.singleLineHeight + EditorGUIUtility.standardVerticalSpacing + childrenHeight;
+
+            Rect previewRect = new(position.x, previewStartY, position.width, WavePreviewRenderer.GraphHeight);
+            WavePreviewRenderer.Draw(previewRect, property);
         }
 
-        // private const float _resolutionMin = 0.0001f;
-        // [SerializeField] private float m_startTime;
-        // [SerializeField] private float m_endTime = 1f;
-        // [SerializeField] private float m_timeOffset;
-        // [SerializeField] private float m_resolution = 0.01f;
-        // [SerializeField] private AnimationCurve m_curve = new();
-        //
-        // public float StartTime => m_startTime;
-        // public float EndTime => m_endTime;
-        // public float TimeOffset => m_timeOffset;
-        // public float Resolution
-        // {
-        //     get
-        //     {
-        //         float fieldValue = m_resolution;
-        //         return fieldValue < ResolutionMin ? ResolutionMin : fieldValue;
-        //     }
-        // }
-
-        // public AnimationCurve GetCurve(IWave wave)
-        // {
-        //     m_curve.keys = GetFrames(wave).ToArray();
-        //     return m_curve;
-        // }
-
-        public const float ResolutionMin = 0.0001f;
-
-        private readonly List<Keyframe> _frames = new();
-
-        public List<Keyframe> GetFrames(Wave wave)
+        public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
         {
-            _frames.Clear();
+            float baseHeight = EditorGUIUtility.singleLineHeight;
 
-            if(wave == null) { return _frames; }
+            if (property.propertyType == SerializedPropertyType.ManagedReference && string.IsNullOrEmpty(property.managedReferenceFullTypename)) { return baseHeight; }
+            if (!property.isExpanded) { return baseHeight; }
 
-            for(float time = StartTime; time < EndTime; time += Resolution)
+            return baseHeight + GetChildrenTotalHeight(property) + WavePreviewRenderer.GraphHeight + EditorGUIUtility.standardVerticalSpacing;
+        }
+
+        private static void DrawHeader(Rect rect, SerializedProperty property, GUIContent label)
+        {
+            if (property.propertyType == SerializedPropertyType.ManagedReference)
             {
-                float value = wave.Evaluate(TimeOffset, time);
-                _frames.Add(new Keyframe(time, value));
+                DrawTypeDropdown(rect, property, label);
+                property.isExpanded = EditorGUI.Foldout(rect, property.isExpanded, GUIContent.none, true);
+                return;
             }
 
-            return _frames;
+            // Concrete fields (like root WaveCollection) get a standard structural foldout header toggle
+            property.isExpanded = EditorGUI.Foldout(rect, property.isExpanded, label, true);
+        }
+
+        private static void DrawTypeDropdown(Rect rect, SerializedProperty property, GUIContent label)
+        {
+            Rect dropdownRect = EditorGUI.PrefixLabel(rect, label);
+            string typeName = GetDisplayTypeName(property.managedReferenceFullTypename);
+
+            if (!EditorGUI.DropdownButton(dropdownRect, new GUIContent(typeName), FocusType.Passive)) { return; }
+
+            GenericMenu menu = new();
+            menu.AddItem(new GUIContent("Null"), string.IsNullOrEmpty(property.managedReferenceFullTypename), () => AssignNewType(property, null));
+
+            IEnumerable<Type> concreteTypes = TypeCache.GetTypesDerivedFrom<IWave>().Where(static t => !t.IsAbstract && !t.IsInterface);
+            foreach (Type type in concreteTypes)
+            {
+                bool isCurrent = property.managedReferenceFullTypename.EndsWith(type.FullName);
+                menu.AddItem(new GUIContent(type.Name), isCurrent, () => AssignNewType(property, type));
+            }
+
+            menu.ShowAsContext();
+        }
+
+        private static void DrawChildProperties(Rect position, SerializedProperty property)
+        {
+            SerializedProperty child = property.Copy();
+            int rootDepth = child.depth;
+
+            float yOffset = EditorGUIUtility.singleLineHeight + EditorGUIUtility.standardVerticalSpacing;
+            bool enterChildren = true;
+
+            EditorGUI.indentLevel++;
+
+            while (child.NextVisible(enterChildren))
+            {
+                if (child.depth <= rootDepth) { break; }
+                enterChildren = false;
+
+                float height = EditorGUI.GetPropertyHeight(child, true);
+                Rect childRect = new(position.x, position.y + yOffset, position.width, height);
+
+                EditorGUI.PropertyField(childRect, child, true);
+                yOffset += height + EditorGUIUtility.standardVerticalSpacing;
+            }
+
+            EditorGUI.indentLevel--;
+        }
+
+        private static float GetChildrenTotalHeight(SerializedProperty property)
+        {
+            SerializedProperty child = property.Copy();
+            int rootDepth = child.depth;
+
+            float totalHeight = 0f;
+            bool enterChildren = true;
+
+            while (child.NextVisible(enterChildren))
+            {
+                if (child.depth <= rootDepth) { break; }
+                enterChildren = false;
+
+                totalHeight += EditorGUI.GetPropertyHeight(child, true) + EditorGUIUtility.standardVerticalSpacing;
+            }
+
+            return totalHeight;
+        }
+
+        private static string GetDisplayTypeName(string fullTypeName) => string.IsNullOrEmpty(fullTypeName)
+            ? "Select Wave type"
+            : fullTypeName.Split(' ').Last().Split('.').Last();
+
+        private static void AssignNewType(SerializedProperty property, Type type)
+        {
+            property.managedReferenceValue = type != null ? Activator.CreateInstance(type) : null;
+            property.serializedObject.ApplyModifiedProperties();
         }
     }
-}
 }

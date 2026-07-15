@@ -7,10 +7,13 @@ using UnityEngine;
 namespace TrickleCharge.Math.Waves
 {
 [Serializable]
-public class WaveCollection : IList<Wave>, IWave
+public class WaveCollection : IList<IWave>, IWave
 {
-    [SerializeField] private bool m_enabled = true;
-    [SerializeField] private List<Wave> m_waves;
+    [SerializeField]
+    private bool m_enabled = true;
+
+    [SerializeReference]
+    private List<IWave> m_waves = new();
 
     public bool Enabled
     {
@@ -18,14 +21,17 @@ public class WaveCollection : IList<Wave>, IWave
         set => m_enabled = value;
     }
 
+    public List<IWave> Waves => m_waves;
+
     /// <inheritdoc />
     public float Evaluate(float time, float position = 0)
     {
         if(! Enabled) { return 0; }
 
         float sum = 0;
-        foreach(Wave wave in this)
+        foreach(IWave wave in this)
         {
+            if(wave == null) { continue; }
             sum  += wave.Evaluate(time, position);
         }
 
@@ -33,46 +39,46 @@ public class WaveCollection : IList<Wave>, IWave
     }
 
     /// <inheritdoc />
-    public IEnumerator<Wave> GetEnumerator() => m_waves.GetEnumerator();
+    public IEnumerator<IWave> GetEnumerator() => Waves.GetEnumerator();
 
     /// <inheritdoc />
     IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
     /// <inheritdoc />
-    public void Add(Wave item) => m_waves.Add(item);
+    public void Add(IWave item) => Waves.Add(item);
 
     /// <inheritdoc />
-    public void Clear() => m_waves.Clear();
+    public void Clear() => Waves.Clear();
 
     /// <inheritdoc />
-    public bool Contains(Wave item) => m_waves.Contains(item);
+    public bool Contains(IWave item) => Waves.Contains(item);
 
     /// <inheritdoc />
-    public void CopyTo(Wave[] array, int arrayIndex) => m_waves.CopyTo(array, arrayIndex);
+    public void CopyTo(IWave[] array, int arrayIndex) => Waves.CopyTo(array, arrayIndex);
 
     /// <inheritdoc />
-    public bool Remove(Wave item) => m_waves.Remove(item);
+    public bool Remove(IWave item) => Waves.Remove(item);
 
     /// <inheritdoc />
-    public int Count => m_waves.Count;
+    public int Count => Waves.Count;
 
     /// <inheritdoc />
     public bool IsReadOnly => false;
 
     /// <inheritdoc />
-    public int IndexOf(Wave item) => m_waves.IndexOf(item);
+    public int IndexOf(IWave item) => Waves.IndexOf(item);
 
     /// <inheritdoc />
-    public void Insert(int index, Wave item) => m_waves.Insert(index, item);
+    public void Insert(int index, IWave item) => Waves.Insert(index, item);
 
     /// <inheritdoc />
-    public void RemoveAt(int index) => m_waves.RemoveAt(index);
+    public void RemoveAt(int index) => Waves.RemoveAt(index);
 
     /// <inheritdoc />
-    public Wave this[int index]
+    public IWave this[int index]
     {
-        get => m_waves[index];
-        set => m_waves[index] = value;
+        get => Waves[index];
+        set => Waves[index] = value;
     }
 }
 }

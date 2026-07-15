@@ -2,9 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
-
 using TrickleCharge.Math.Waves;
-
 using UnityEditor;
 using UnityEngine;
 
@@ -12,14 +10,16 @@ namespace TrickleCharge.Math.Editor.Waves
 {
     public static class WavePreviewRenderer
     {
-        // Combined height: 18px (Slider) + 2px (Spacing) + 55px (Graph)
         public const float GraphHeight = 75f;
 
         private const int _sampleCount = 45;
         private const float _sampleRangeX = 10f;
 
-        // Tracks independent scrub times per serialized property path field
         private static readonly Dictionary<string, float> s_scrubTimes = new();
+
+        // Reusable transient curve instance to stop runtime heap allocations on repaint loops
+        private static readonly AnimationCurve s_transientCurve = new();
+        private static readonly List<Keyframe> s_keyframeBuffer = new();
 
         public static void Draw(Rect position, SerializedProperty property)
         {
@@ -29,38 +29,24 @@ namespace TrickleCharge.Math.Editor.Waves
             string pathKey = property.propertyPath;
             float currentTime = s_scrubTimes.GetValueOrDefault(pathKey, 0f);
 
-            // Slice out layout rectangles lineally
             float sliderHeight = EditorGUIUtility.singleLineHeight;
             Rect sliderRect = new(position.x, position.y, position.width, sliderHeight);
             Rect curveRect = new(position.x, position.y + sliderHeight + EditorGUIUtility.standardVerticalSpacing, position.width, 55f);
 
-            // 1. Draw interactive scrub slider
             Rect indentedSliderRect = EditorGUI.IndentedRect(sliderRect);
             s_scrubTimes[pathKey] = EditorGUI.Slider(indentedSliderRect, "Scrub Time", currentTime, 0f, 20f);
 
-            // 2. Sample wave graph at the chosen scrub time
-            AnimationCurve transientCurve = GenerateSampledCurve(wave, s_scrubTimes[pathKey]);
+            // 1. Populate the local reusable buffer via our new public extraction layout
+            s_keyframeBuffer.Clear();
+            WaveUtility.GenerateWaveKeyframesNonAlloc(wave, s_scrubTimes[pathKey], _sampleCount, _sampleRangeX, s_keyframeBuffer);
 
-            // 3. Draw read-only visualizer graph
+            // 2. Assign the keys to our persistent transient curve representation
+            s_transientCurve.keys = s_keyframeBuffer.ToArray();
+
             EditorGUI.BeginDisabledGroup(true);
             Rect indentedCurveRect = EditorGUI.IndentedRect(curveRect);
-            EditorGUI.CurveField(indentedCurveRect, "Shape Preview", transientCurve);
+            EditorGUI.CurveField(indentedCurveRect, "Shape Preview", s_transientCurve);
             EditorGUI.EndDisabledGroup();
-        }
-
-        private static AnimationCurve GenerateSampledCurve(IWave wave, float time)
-        {
-            AnimationCurve curve = new();
-            float stepSize = _sampleRangeX / _sampleCount;
-
-            for (int i = 0; i <= _sampleCount; i++)
-            {
-                float x = i * stepSize;
-                float y = wave.Evaluate(time, x);
-                curve.AddKey(x, y);
-            }
-
-            return curve;
         }
 
         private static IWave GetWaveInstance(SerializedProperty property)

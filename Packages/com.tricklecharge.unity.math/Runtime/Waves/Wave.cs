@@ -10,22 +10,30 @@ namespace TrickleCharge.Math.Waves
 public class Wave : IWave
 {
     [Tooltip("Should the wave be evaluated?")]
-    [SerializeField] private bool m_enabled = true;
+    [SerializeField]
+    private bool m_enabled = true;
 
     [Tooltip("The equilibrium point")]
-    [SerializeField] private float m_bias;
+    [SerializeField]
+    private float m_bias;
 
     [Tooltip("Time offset")]
-    [SerializeField] private float m_phase;
+    [SerializeField]
+    private float m_phase;
 
     [Tooltip("Maximum displacement from the Bias value")]
-    [SerializeField] private float m_amplitude = 1f;
+    [SerializeField]
+    private float m_amplitude = 1f;
 
     [Tooltip("Wave frequency in Hz")]
-    [SerializeField] private float m_frequency = 1f;
+    [SerializeField]
+    private float m_frequency = 1f;
 
-    [SerializeField] private float m_velocity = 1f;
-    [SerializeField] private WaveFunctions.WaveFunctionType m_type = WaveFunctions.WaveFunctionType.Sin;
+    [SerializeField]
+    private float m_velocity = 1f;
+
+    [SerializeField]
+    private WaveFunctions.WaveFunctionType m_type = WaveFunctions.WaveFunctionType.Sin;
 
     public bool Enabled
     {
@@ -63,13 +71,19 @@ public class Wave : IWave
         set => m_velocity = value;
     }
 
+    public WaveFunctions.WaveFunctionType Type
+    {
+        get => m_type;
+        set => m_type = value;
+    }
+
     private WaveFunction Function => WaveFunctions.FunctionByType(m_type);
 
     public float Evaluate(float time, float position = 0) => Evaluate(Function, time, position);
 
     public float Evaluate(WaveFunction function, float time, float position = 0)
     {
-        if(! m_enabled) { return 0; }
+        if(! Enabled) { return 0; }
 
         return function.Invoke(time, position, Phase, Amplitude, Frequency, Velocity, Bias);
     }

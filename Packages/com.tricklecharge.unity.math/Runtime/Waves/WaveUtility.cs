@@ -25,7 +25,7 @@ public static class WaveUtility
     /// Performance-focused implementation that streams spatial evaluation steps into an existing list buffer.
     /// Useful for high-frequency inspector repaints or structural runtime tracking.
     /// </summary>
-    public static void GenerateWaveKeyframesNonAlloc(IWave wave, float time, int sampleCount, float sampleRangeX, List<Keyframe> resultsBuffer)
+    public static void GenerateWaveKeyframesNonAlloc(IWave wave, float time, int sampleCount, float sampleRangeX, ICollection<Keyframe> resultsBuffer)
     {
         if (resultsBuffer == null) { throw new ArgumentNullException(nameof(resultsBuffer)); }
 

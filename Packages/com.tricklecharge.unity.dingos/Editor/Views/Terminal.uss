@@ -1,0 +1,9 @@
+#terminal-scroll {
+    flex-grow: 1;
+    background-color: #191919;
+}
+
+#terminal-output {
+    color: #33FF00;
+    /*font-definition: url("Fonts/JetBrainsMono.ttf");*/
+}

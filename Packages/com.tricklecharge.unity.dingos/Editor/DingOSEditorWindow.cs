@@ -1,13 +1,18 @@
 using System;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
 
 using TrickleCharge.DingOS.Shell;
 using TrickleCharge.DingOS.Terminal;
 using TrickleCharge.DingOS.Unity.Editor.Views;
+using TrickleCharge.DingOS.Unity.Modules;
+
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UIElements;
+
+using Debug = UnityEngine.Debug;
 
 namespace TrickleCharge.DingOS.Unity.Editor
 {
@@ -20,6 +25,7 @@ namespace TrickleCharge.DingOS.Unity.Editor
         private TerminalHost _terminalHost;
 
         private TextField _inputField;
+        private Label _outputLabel;
         private CancellationTokenSource _cancellationTokenSource;
 
         [MenuItem("Tools/DingOS Console")]
@@ -31,56 +37,53 @@ namespace TrickleCharge.DingOS.Unity.Editor
         public void CreateGUI()
         {
             _cancellationTokenSource = new CancellationTokenSource();
-
             VisualElement root = rootVisualElement;
-            root.style.flexDirection = FlexDirection.Column;
 
-            // 1. Build UI layout
-            ScrollView scrollView = new()
+            // 1. Load UXML and USS from package path
+            VisualTreeAsset uxml = AssetDatabase.LoadAssetAtPath<VisualTreeAsset>(
+                "Packages/com.tricklecharge.unity.dingos/Editor/Views/Terminal.uxml"
+            );
+            StyleSheet uss = AssetDatabase.LoadAssetAtPath<StyleSheet>(
+                "Packages/com.tricklecharge.unity.dingos/Editor/Views/Terminal.uss"
+            );
+
+            if (uxml != null)
             {
-                name = "terminal-scroll",
-                style = { flexGrow = 1 }
-            };
-
-            Label outputLabel = new()
+                uxml.CloneTree(root);
+            }
+            else
             {
-                name = "terminal-output",
-                style = { whiteSpace = WhiteSpace.Normal }
-            };
-            scrollView.Add(outputLabel);
+                Debug.LogError("[DingOS] Could not load Terminal.uxml asset.");
+                return;
+            }
 
-            _inputField = new TextField
+            if (uss != null)
             {
-                name = "terminal-input"
-            };
+                root.styleSheets.Add(uss);
+            }
 
-            root.Add(scrollView);
-            root.Add(_inputField);
-
-            // // Load UXML asset in EditorWindow
-            // VisualTreeAsset uxml = AssetDatabase.LoadAssetAtPath<VisualTreeAsset>("Packages/com.tricklecharge.unity.dingos/Editor/Views/Terminal.uxml");
-            // uxml.CloneTree(root);
-            //
-            // // UIToolkitTerminalView automatically hooks up to the cloned UXML tree
-            // _terminalView = new UIToolkitTerminalView(root);
-
-            // 2. Initialize Terminal I/O & Adapter View
+            // 2. Query elements from cloned UXML tree
+            _inputField = root.Q<TextField>("terminal-input");
+            _outputLabel = root.Q<Label>("terminal-output");
+            // 3. Initialize Terminal View & Adapter
             _terminalView = new UIToolkitTerminalView(root);
             _terminal = new UnityTerminal(_terminalView);
 
-            // 3. Setup Shell Context & Context Stack
+            // 4. Setup Shell Context & Context Stack
             _contextStack = new ShellContextManager(_terminal);
             _shell = new CommandShell().WithInteractiveDefaults();
+            _shell.RegisterModule(new LoggingModule());
 
             ShellContext rootContext = new("Editor", "DingOS> ", _shell);
             _contextStack.PushContext(rootContext);
 
-            // 4. Initialize TerminalHost (owns stdout/stderr bindings to _terminal)
+            // 5. Initialize TerminalHost
             _terminalHost = new TerminalHost(_terminal, _contextStack);
 
-            // 5. Sync active prompt & bind input handler
-            UpdateInputPrompt();
-            _inputField.RegisterCallback<KeyDownEvent>(OnInputKeyDown);
+            // 6. Sync active prompt & bind input handler
+            //UpdateInputPrompt();
+            _inputField?.RegisterCallback<KeyDownEvent>(OnInputKeyDown, TrickleDown.TrickleDown);
+            root?.RegisterCallback<ClickEvent>(_ => _inputField?.Focus());
         }
 
         private void OnDisable()
@@ -92,10 +95,12 @@ namespace TrickleCharge.DingOS.Unity.Editor
 
         private void OnInputKeyDown(KeyDownEvent evt)
         {
-            if (evt.keyCode is not (KeyCode.Return or KeyCode.KeypadEnter)) { return; }
+            if(evt.keyCode is not (KeyCode.Return or KeyCode.KeypadEnter)) { return; }
+
+            evt.StopPropagation();
 
             string input = _inputField.value;
-            if (string.IsNullOrWhiteSpace(input)) { return; }
+            if(string.IsNullOrWhiteSpace(input)) { return; }
 
             // Clear input box
             _inputField.value = string.Empty;
@@ -104,27 +109,34 @@ namespace TrickleCharge.DingOS.Unity.Editor
             string prompt = _terminalHost.ContextStack.ActivePrompt;
             _terminal.WriteLine($"{prompt}{input}");
 
-            evt.StopPropagation();
+            _inputField.schedule.Execute(() => _inputField.Focus());
 
             _ = ExecuteCommandAsync(input);
+
+            //Debug.Log(_outputLabel.text);
         }
 
         private async Task ExecuteCommandAsync(string input)
         {
+            Stopwatch sw = Stopwatch.StartNew();
+
             try
             {
                 await _terminalHost.ExecuteAsync(input, _cancellationTokenSource?.Token ?? CancellationToken.None);
 
                 // Prompt may change if context changed (e.g., net connect / exit)
-                UpdateInputPrompt();
+                //UpdateInputPrompt();
             }
-            catch (OperationCanceledException)
+            catch(OperationCanceledException) { }
+            catch(Exception ex) { _terminal.WriteErrorLine($"[Error] {ex.Message}"); }
+            finally
             {
-                // Graceful cancellation on disable
-            }
-            catch (Exception ex)
-            {
-                _terminal.WriteErrorLine($"[Error] {ex.Message}");
+                sw.Stop();
+                // Log execution time if it took longer than a single frame threshold (e.g. >16ms)
+                if (sw.ElapsedMilliseconds > 16)
+                {
+                    Debug.Log($"[DingOS Profiler] Command '{input}' took {sw.ElapsedMilliseconds}ms");
+                }
             }
         }
 

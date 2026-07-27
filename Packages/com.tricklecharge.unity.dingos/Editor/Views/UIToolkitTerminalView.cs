@@ -21,7 +21,7 @@ public class UIToolkitTerminalView : ITerminalView
     {
         if (_outputLabel == null) { return; }
 
-        _outputLabel.text += text;
+        _outputLabel.text += text.Replace("\r\n", "\n");
     }
 
     public void Clear()

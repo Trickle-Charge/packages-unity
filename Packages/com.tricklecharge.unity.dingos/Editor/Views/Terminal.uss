@@ -1,9 +1,13 @@
 #terminal-scroll {
     flex-grow: 1;
-    background-color: #191919;
+    -unity-font-definition: resource("FlatSkin/Font/Roboto-Regular");
+    font-size: 16px;
 }
 
 #terminal-output {
-    color: #33FF00;
-    /*font-definition: url("Fonts/JetBrainsMono.ttf");*/
+    color: rgb(51, 255, 0);
+}
+
+#terminal-input {
+    color: rgb(51, 255, 0);
 }

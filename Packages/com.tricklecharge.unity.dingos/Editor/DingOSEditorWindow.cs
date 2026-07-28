@@ -81,9 +81,10 @@ namespace TrickleCharge.DingOS.Unity.Editor
             _terminalHost = new TerminalHost(_terminal, _contextStack);
 
             // 6. Sync active prompt & bind input handler
-            //UpdateInputPrompt();
+            // UpdateInputPrompt();
             _inputField?.RegisterCallback<KeyDownEvent>(OnInputKeyDown, TrickleDown.TrickleDown);
-            root?.RegisterCallback<ClickEvent>(_ => _inputField?.Focus());
+            //root?.RegisterCallback<ClickEvent>(_ => _inputField?.Focus());
+            //_outputLabel?.RegisterCallback <KeyDownEvent>(_ => _inputField?.Focus());
         }
 
         private void OnDisable()

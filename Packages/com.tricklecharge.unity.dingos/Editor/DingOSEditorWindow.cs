@@ -1,5 +1,4 @@
 using System;
-using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -119,8 +118,6 @@ namespace TrickleCharge.DingOS.Unity.Editor
 
         private async Task ExecuteCommandAsync(string input)
         {
-            Stopwatch sw = Stopwatch.StartNew();
-
             try
             {
                 await _terminalHost.ExecuteAsync(input, _cancellationTokenSource?.Token ?? CancellationToken.None);
@@ -130,15 +127,6 @@ namespace TrickleCharge.DingOS.Unity.Editor
             }
             catch(OperationCanceledException) { }
             catch(Exception ex) { _terminal.WriteErrorLine($"[Error] {ex.Message}"); }
-            finally
-            {
-                sw.Stop();
-                // Log execution time if it took longer than a single frame threshold (e.g. >16ms)
-                if (sw.ElapsedMilliseconds > 16)
-                {
-                    Debug.Log($"[DingOS Profiler] Command '{input}' took {sw.ElapsedMilliseconds}ms");
-                }
-            }
         }
 
         private void UpdateInputPrompt()

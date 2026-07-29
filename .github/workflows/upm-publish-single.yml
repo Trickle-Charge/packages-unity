@@ -1,0 +1,68 @@
+name: Publish Single Package
+
+on:
+  workflow_dispatch:
+    inputs:
+      
+      # ========================================================================
+      # OPTION 1: Free-Text String Only (Default)
+      # Zero maintenance—allows typing any package directory on demand.
+      # (To use: Uncomment this block and comment out Option 1 & Option 3)
+      # ========================================================================
+      package-folder:
+        description: 'Enter package folder name (e.g. com.tricklecharge.core)'
+        required: true
+        type: string
+        default: 'com.tricklecharge.'
+
+      # ========================================================================
+      # OPTION 2: Dropdown Choice Only
+      # Best for repos with a fixed list of stable packages.
+      # ========================================================================
+      # package-folder:
+      #   description: 'Select package folder to publish'
+      #   required: true
+      #   type: choice
+      #   options:
+      #     - 'com.tricklecharge.core'
+      #     - 'com.tricklecharge.ui'
+
+      # ========================================================================
+      # OPTION 3: Hybrid (Dropdown + Custom Text Fallback)
+      # Provides a dropdown for standard packages with a text box escape hatch.
+      # (To use: Uncomment this block and comment out Option 1 & Option 2)
+      # ========================================================================
+      # package-choice:
+      #   description: 'Select package'
+      #   required: true
+      #   type: choice
+      #   options:
+      #     - 'com.tricklecharge.core'
+      #     - 'com.tricklecharge.ui'
+      #     - 'CUSTOM (Use text field below)'
+      # package-custom:
+      #   description: 'Custom package folder name (only if "CUSTOM" selected above)'
+      #   required: false
+      #   type: string
+      #   default: 'com.tricklecharge.'
+
+jobs:
+  publish:
+    uses: Trickle-Charge/TrickleCharge-Infra/.github/workflows/publish-upm-packages.yml@main
+    with:
+      # ------------------------------------------------------------------------
+      # FOR OPTION 1 or OPTION 2:
+      # ------------------------------------------------------------------------
+      package-path: 'Packages/${{ inputs.package-folder }}'
+
+      # ------------------------------------------------------------------------
+      # FOR OPTION 3 (Uncomment this and comment out the package-path line above):
+      # ------------------------------------------------------------------------
+      # package-path: >-
+      #   ${{ 
+      #     inputs.package-choice == 'CUSTOM (Use text field below)' && 
+      #     format('Packages/{0}', inputs.package-custom) || 
+      #     format('Packages/{0}', inputs.package-choice) 
+      #   }}
+
+    secrets: inherit

@@ -14,8 +14,4 @@ jobs:
     with:
       package-path: 'Packages/*'
       ignore-packages: 'com.tricklecharge.unity.template'
-    secrets:
-      UNITY_ORG_ID: ${{ secrets.UNITY_ORG_ID }}
-      UPM_SERVICE_ACCOUNT_KEY_ID: ${{ secrets.UPM_SERVICE_ACCOUNT_KEY_ID }}
-      UPM_SERVICE_ACCOUNT_KEY_SECRET: ${{ secrets.UPM_SERVICE_ACCOUNT_KEY_SECRET }}
-      NODE_AUTH_TOKEN: ${{ secrets.NODE_AUTH_TOKEN }}
+    secrets: inherit

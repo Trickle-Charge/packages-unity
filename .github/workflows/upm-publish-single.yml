@@ -13,7 +13,7 @@ on:
         description: 'Enter package folder name (e.g. com.tricklecharge.core)'
         required: true
         type: string
-        default: 'com.tricklecharge.'
+        default: 'com.tricklecharge.unity.'
 
       # ========================================================================
       # OPTION 2: Dropdown Choice Only

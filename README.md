@@ -165,7 +165,7 @@ Create / modify your `.upmconfig.toml` and add an entry.
 
 ```toml
 [npmAuth."https://npm.tricklecharge.dev/"]
-token = "xxxxxxxxxxx"
+_authToken = "xxxxxxxxxxx"
 alwaysAuth = true
 ```
 

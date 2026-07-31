@@ -36,7 +36,7 @@ or via the Unity project settings:
 
 ### Example `manifest.json`
 
-```
+```json
 {
     "dependencies": {
         "com.tricklecharge.unity.art.core": "0.0.1",
@@ -64,7 +64,7 @@ or via the Unity project settings:
 
 You can also clone the repo and add the packages directly:
 
-```
+```json
 {
     "dependencies": {
         "com.tricklecharge.unity.art.core": "file:S:/Dev/unity-packages/Packages/com.tricklecharge.unity.art.core",
@@ -78,6 +78,7 @@ You can also clone the repo and add the packages directly:
     }
 }
 ```
+
 ---
 
 ## Authentication

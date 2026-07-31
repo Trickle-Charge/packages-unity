@@ -72,6 +72,7 @@ namespace TrickleCharge.DingOS.Unity.Editor
             _contextStack = new ShellContextManager(_terminal);
             _shell = new CommandShell().WithInteractiveDefaults();
             _shell.RegisterModule(new LoggingModule());
+            _shell.RegisterModule(new TimeScaleModule());
 
             ShellContext rootContext = new("Editor", "DingOS> ", _shell);
             _contextStack.PushContext(rootContext);

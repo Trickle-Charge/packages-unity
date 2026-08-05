@@ -10,7 +10,7 @@ LCD shader mimics the look of a screen by masking the input using tiled RGB pixe
 
 The shader supports RenderTextures as input.
 
-The output is sent to the materials emission channel.
+The output is sent to the material's emission channel.
 
 The resolution of the pixel tiling is customizable.
 

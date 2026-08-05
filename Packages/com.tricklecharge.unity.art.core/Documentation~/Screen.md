@@ -27,3 +27,7 @@ Brightness is also adjustable.
 [Dingus OS - Remote camera test](https://youtu.be/MuDivyC8LFg)
 
 [Satellite Orbit](https://youtu.be/FrbAJCYsdIY)
+
+[![Close up camera](images/lcd_closeup.png)](https://youtu.be/MuDivyC8LFg?t=137)
+
+---

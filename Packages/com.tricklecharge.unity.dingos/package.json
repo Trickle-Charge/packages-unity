@@ -2,7 +2,7 @@
   "name": "com.tricklecharge.unity.dingos",
   "displayName": "TrickleCharge DingOS",
   "description": "Unity interface for DingOS.",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "unity": "6000.3",
   "unityRelease": "10f1",
   "keywords": [
@@ -19,5 +19,7 @@
   "publishConfig": {
     "registry": "https://npm.tricklecharge.dev/"
   },
-  "dependencies": { }
+  "dependencies": {
+    "com.unity.ugui": "2.0.0"
+  }
 }

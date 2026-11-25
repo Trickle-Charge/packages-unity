@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.CommandLine;
 
 using TrickleCharge.DingOS.Core;
 using TrickleCharge.DingOS.Shell;
@@ -7,6 +9,10 @@ using UnityEngine;
 
 namespace TrickleCharge.DingOS.Unity
 {
+/// <summary>
+/// Engine-agnostic shell setup shared by runtime terminals (<see cref="TerminalComponent"/>) and editor tooling.
+/// Plain serializable class, not a component: host it from a MonoBehaviour or EditorWindow.
+/// </summary>
 [Serializable]
 public class UnityShellController : IDisposable
 {
@@ -32,11 +38,23 @@ public class UnityShellController : IDisposable
 
     public ShellContextManager ContextStack { get; private set; }
 
-    public void Initialize(ITerminal terminal)
+    public bool IsInitialized => Shell != null;
+
+    public void Initialize(ITerminal terminal, IEnumerable<ICommandModule<Command>> modules = null)
     {
+        if (terminal == null) { throw new ArgumentNullException(nameof(terminal)); }
+
         ContextStack = new ShellContextManager(terminal);
         Shell = new CommandShell()
             .WithInteractiveDefaults();
+
+        if (modules != null)
+        {
+            foreach (ICommandModule<Command> module in modules)
+            {
+                if (module != null) { Shell.RegisterModule(module); }
+            }
+        }
 
         ShellContext rootContext = new(RootContextName, PromptFormat, Shell);
         ContextStack.PushContext(rootContext);
